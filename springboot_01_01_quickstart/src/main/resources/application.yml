@@ -1,0 +1,18 @@
+server:
+  port: 8888
+
+lesson: SpringBoot
+
+enterprise:
+  name: xxyw
+  age: 23
+  hobbies:
+    - Java
+    - Hadoop
+    - Duel
+
+data-source:
+  driver: com.mysql
+  url: localhost:88/go/rush
+  username: root
+  password: 123456
