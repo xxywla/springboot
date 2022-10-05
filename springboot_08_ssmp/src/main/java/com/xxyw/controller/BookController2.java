@@ -6,6 +6,8 @@ import com.xxyw.service.IBookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+
 @RestController
 @RequestMapping("/books")
 public class BookController2 {
@@ -21,8 +23,13 @@ public class BookController2 {
 
     // 新增
     @PostMapping
-    public R saveBook(@RequestBody Book book) {
-        return new R(bookService.save(book));
+    public R saveBook(@RequestBody Book book) throws Exception {
+
+        if (book.getName().equals("123")) {
+            throw new IOException("人为异常");
+        }
+        boolean flag = bookService.save(book);
+        return new R(flag, flag ? "成功啦^-^" : "失败了-_-|");
     }
 
     // 修改
