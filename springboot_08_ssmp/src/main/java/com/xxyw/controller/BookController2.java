@@ -1,5 +1,6 @@
 package com.xxyw.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.xxyw.controller.utils.R;
 import com.xxyw.domain.Book;
 import com.xxyw.service.IBookService;
@@ -52,8 +53,28 @@ public class BookController2 {
     }
 
     // 分页查
-    @GetMapping("{curPage}/{pageSize}")
+    //@GetMapping("{curPage}/{pageSize}")
     public R getByPage(@PathVariable Integer curPage, @PathVariable Integer pageSize) {
-        return new R(true, bookService.getPage(curPage, pageSize));
+        IPage<Book> page = bookService.getPage(curPage, pageSize);
+
+        // 如果当前的页数超过了实际页数 重新查一下最后一页
+        if (curPage > page.getPages()) {
+            page = bookService.getPage((int) page.getPages(), pageSize);
+        }
+
+        return new R(true, page);
+    }
+
+    // 分页+条件查
+    @GetMapping("{curPage}/{pageSize}")
+    public R getByPage(@PathVariable Integer curPage, @PathVariable Integer pageSize, Book book) {
+        IPage<Book> page = bookService.getPage(curPage, pageSize, book);
+
+        // 如果当前的页数超过了实际页数 重新查一下最后一页
+        if (curPage > page.getPages()) {
+            page = bookService.getPage((int) page.getPages(), pageSize, book);
+        }
+
+        return new R(true, page);
     }
 }

@@ -6,4 +6,6 @@ import com.xxyw.domain.Book;
 
 public interface IBookService extends IService<Book> {
     IPage<Book> getPage(Integer curPage, Integer pageSize);
+
+    IPage<Book> getPage(Integer curPage, Integer pageSize, Book bookCondition);
 }
